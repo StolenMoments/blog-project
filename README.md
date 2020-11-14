@@ -1,4 +1,4 @@
-# blog_project
+# blog-project
 
 ### 개요
 - 개인 블로그 프로젝트.
