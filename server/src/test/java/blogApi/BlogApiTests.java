@@ -1,10 +1,10 @@
-package site.stolenmoments.server;
+package blogApi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ServerApplicationTests {
+class BlogApiTests {
 
     @Test
     void contextLoads() {
