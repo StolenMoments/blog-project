@@ -1,4 +1,4 @@
-package blogApi.web.dto;
+package blogApi.web;
 
 import org.springframework.stereotype.Controller;
 
