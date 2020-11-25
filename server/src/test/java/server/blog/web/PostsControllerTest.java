@@ -58,4 +58,17 @@ public class PostsControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk());
 
     }
+
+
+    @Test
+    @Transactional
+    public void 게시글_테스트_UPDATE() throws Exception {
+
+    }
+
+    @Test
+    @Transactional
+    public void 게시글_테스트_DELETE() throws Exception {
+
+    }
 }
