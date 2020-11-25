@@ -42,7 +42,6 @@ public class Posts {
         this.isNotice = isNotice;
         this.isPrivate = isPrivate;
         this.datetime = LocalDateTime.now();
-        this.hit = hit + 1;
     }
 
 }
