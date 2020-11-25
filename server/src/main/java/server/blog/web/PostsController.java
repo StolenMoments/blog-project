@@ -23,7 +23,7 @@ public class PostsController {
     }
 
     @ApiOperation(value = "게시글 저장")
-    @PostMapping("/api/posts/")
+    @PostMapping("/api/posts")
     private Long save(@RequestBody PostsSaveRequestDto requestDto) {
         return postsService.save(requestDto);
     }

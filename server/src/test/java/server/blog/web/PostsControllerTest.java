@@ -24,4 +24,8 @@ public class PostsControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+    @Test
+    public void postsPostTest() throws Exception {
+    }
 }
