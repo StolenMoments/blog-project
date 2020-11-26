@@ -3,7 +3,6 @@ package server.blog.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 import server.blog.domain.posts.Posts;
 import server.blog.domain.posts.PostsRepository;
 import server.blog.web.dto.posts.PostsResponseDto;
@@ -27,6 +26,7 @@ public class PostsService {
         return new PostsResponseDto(entity);
     }
 
+    @Transactional
     public Long update(Long id, PostsSaveRequestDto requestDto) {
         Posts entity = postsRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 포스트가 없습니다."));
@@ -37,6 +37,7 @@ public class PostsService {
         return entity.getPostId();
     }
 
+    @Transactional
     public Long delete(Long id) {
         Posts entity = postsRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 포스트가 없습니다."));

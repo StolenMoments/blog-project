@@ -5,17 +5,16 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
+import server.blog.domain.posts.Posts;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -79,12 +78,12 @@ public class PostsControllerTest extends AbstractControllerTest {
     @Transactional
     public void 게시글_테스트_PUT() throws Exception {
         ObjectNode content = objectMapper.createObjectNode();
-        content.put("title", "제목 UPDATE 테스트 입니다");
+        content.put("title", "제목 UPDATE 테스트");
         content.put("content", "내용 UPDATE 테스트");
-        content.put("isNotice", 0);
-        content.put("isPrivate", 0);
+        content.put("isNotice", 2);
+        content.put("isPrivate", 1);
 
-        String mvcResultString = mvc.perform(
+        String POSTResultString = mvc.perform(
                 put("/api/posts/1")
                         .content(objectMapper.writeValueAsString(content))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -94,7 +93,19 @@ public class PostsControllerTest extends AbstractControllerTest {
                 .getResponse()
                 .getContentAsString();
 
-        assertEquals(mvcResultString, "1");
+        String GETResultString = mvc.perform(get("/api/posts/1"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Posts GETResultObject = objectMapper.readValue(GETResultString, Posts.class);
+
+        assertEquals(POSTResultString, "1");
+        assertEquals(GETResultObject.getTitle(), "제목 UPDATE 테스트");
+        assertEquals(GETResultObject.getContent(), "내용 UPDATE 테스트");
+        assertEquals(GETResultObject.getIsNotice(), 2);
+        assertEquals(GETResultObject.getIsPrivate(), 1);
     }
 
 
