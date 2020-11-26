@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.NestedServletException;
 import server.blog.domain.posts.Posts;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -113,13 +116,15 @@ public class PostsControllerTest extends AbstractControllerTest {
     @Order(4)
     @Transactional
     public void 게시글_테스트_DELETE() throws Exception {
-        String mvcResultString = mvc.perform(delete("/api/posts/1"))
+        String DELETEResultString = mvc.perform(delete("/api/posts/1"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
 
-        assertEquals(mvcResultString, "1");
+        assertThatThrownBy(() -> mvc.perform(get("/api/posts/1")))
+                .hasCause(new IllegalArgumentException("해당 포스트가 없습니다."));
+        assertEquals(DELETEResultString, "1");
     }
 
 }
