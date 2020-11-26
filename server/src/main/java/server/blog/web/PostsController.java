@@ -27,4 +27,17 @@ public class PostsController {
     private Long save(@RequestBody PostsSaveRequestDto requestDto) {
         return postsService.save(requestDto);
     }
+
+    @ApiOperation(value = "게시글 수정")
+    @PutMapping("/api/posts/{id}")
+    private Long update(@PathVariable("id") Long id, @RequestBody PostsSaveRequestDto requestDto) {
+        return postsService.update(id, requestDto);
+    }
+
+    @ApiOperation(value = "게시글 삭제")
+    @DeleteMapping("/api/posts/{id}")
+    private Long delete(@PathVariable("id") Long id) {
+        return postsService.delete(id);
+    }
+
 }
